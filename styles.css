@@ -1,90 +1,176 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #2f2f2f;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+  font-family: Arial, sans-serif;
+  background-color: #2f2f2f;
+  color: white;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 .container {
-    text-align: center;
+  text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-h1 {
-    margin-bottom: 20px;
+h1,
+.progress-message {
+  margin-bottom: 20px;
 }
 
-input {
-    padding: 10px;
-    width: 450px;
-    margin-bottom: 20px;
+input[type='text'] {
+  padding: 10px;
+  width: 80%;
+  margin-bottom: 20px;
+  border: 2px solid #5555ff;
+  background-color: #1f1f1f;
+  color: white;
 }
 
 button {
-    padding: 10px 20px;
-    background-color: #5555ff;
-    border: none;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  padding: 10px 20px;
+  background-color: #5555ff;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 button:hover {
-    background-color: #4444dd;
+  background-color: #4444dd;
 }
 
 .loader {
-    border: 5px solid #f3f3f3;
-    border-radius: 50%;
-    border-top: 5px solid #5555ff;
-    width: 30px;
-    height: 30px;
-    animation: spin 1s linear infinite;
-    display: none;
-    margin: 20px auto;
+  border: 5px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 5px solid #5555ff;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  display: none;
+  margin: 20px auto;
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
-.wish-granted {
-    display: none;
-}
-/* Modal */
 .modal {
-    display: none; /* Initially hidden */
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Black with opacity */
-    z-index: 1; /* Above all other content */
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: auto;
 }
 
 .modal-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #2f2f2f;
-    padding: 20px;
-    border-radius: 5px;
-    text-align: center;
-    width: 80%;
-    max-width: 400px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #2f2f2f;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+  width: 80%;
+  max-width: 400px;
 }
 
 .modal-content button {
-    margin-top: 20px;
-    margin-left: 5px;
-    margin-right: 5px;
+  margin-top: 20px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
-.progress-message {
-    margin-bottom: 20px;
+@media (max-width: 600px) {
+  .container,
+  .modal-content {
+    width: 90%;
+    max-width: none;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  input[type='text'] {
+    width: 90%;
+  }
+
+  .progress-message,
+  .modal-content p {
+    font-size: 14px;
+  }
+}
+#wishGrantedScreen {
+  display: none;
+  position: fixed;
+  left: 0%;
+  top: 0%;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+.wish-granted-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #2f2f2f;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+  width: 80%;
+  max-width: 400px;
+}
+#progressContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 500px;
+  background: #333;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.progress-section {
+  margin-bottom: 30px;
+}
+
+.progress-bar {
+  background-color: #444;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+  height: 20px;
+}
+
+.progress {
+  background-color: hotpink;
+  height: 100%;
+  border-radius: 5px;
+  transition: width 0.5s ease;
+}
+
+.progress-percent {
+  margin-top: 5px;
+}
+
+.loader {
+  margin-bottom: 20px;
 }

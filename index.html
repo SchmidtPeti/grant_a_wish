@@ -1,40 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
     <title>Make A Wish</title>
-</head>
+  </head>
 
-<body>
-    <!-- Modal Window -->
-    <div class="modal" id="modalWindow">
-        <div class="modal-content">
-            <h2>Warning</h2>
-            <p>Radical changes are about to happen to your file to grant the wish. Do you still want to continue?</p>
-            <button onclick="continueWish()">Continue</button>
-            <button onclick="closeModal()">Cancel</button>
+  <body>
+    <div id="wishGrantedScreen" style="display: none">
+      <div class="wish-granted-content">
+        <h1>Wish Granted!</h1>
+        <div class="remaining-wishes">
+          Remaining Wishes: <span id="remainingWishes">0</span>
         </div>
+      </div>
+    </div>
+    <div class="modal" id="modalWindow">
+      <div class="modal-content">
+        <h2>Warning</h2>
+        <p>
+          Radical changes are about to happen to your file to grant the wish. Do
+          you still want to continue?
+        </p>
+        <button onclick="continueWish()">Continue</button>
+        <button onclick="closeModal()">Cancel</button>
+      </div>
     </div>
 
-    <div id="progressContainer" style="display: none;">
-        <div class="progress-message" id="worldChangeMessage">Loading changes in your world... <span id="worldChangePercent">0%</span></div>
-        <div class="loader" id="loader1"></div>
-        
-        <div class="progress-message" id="selfChangeMessage">Adjusting the frequencies of your existence... <span id="selfChangePercent">0%</span></div>
-        <div class="loader" id="loader2"></div>
-        <div class="loader" id="loader"></div>
+    <div id="progressContainer" style="display: none">
+      <div class="progress-section">
+        <div class="progress-message" id="worldChangeMessage">
+          Loading changes in your world...
+        </div>
+        <div class="progress-bar" id="worldProgressBar">
+          <div
+            class="progress"
+            id="worldChangeProgress"
+            style="width: 0%"
+          ></div>
+        </div>
+        <div class="progress-percent" id="worldChangePercent">0%</div>
+      </div>
+
+      <div class="progress-section">
+        <div class="progress-message" id="selfChangeMessage">
+          Adjusting the frequencies of your existence...
+        </div>
+        <div class="progress-bar" id="selfProgressBar">
+          <div class="progress" id="selfChangeProgress" style="width: 0%"></div>
+        </div>
+        <div class="progress-percent" id="selfChangePercent">0%</div>
+      </div>
     </div>
-    
-    <div class="container">
-        <h1>Make A Wish</h1>
-        <input type="text" placeholder="Grant me a wish." id="wishInput">
-        <button onclick="grantWish()">Grant a wish</button>
-        <div class="wish-granted" id="wishGranted">Wish Granted!</div>
+
+    <div class="container" id="container">
+      <h1>Make A Wish</h1>
+      <input type="text" placeholder="Grant me a wish." id="wishInput" />
+      <button onclick="grantWish()">Grant a wish</button>
     </div>
     <script src="script.js"></script>
-</body>
-
+  </body>
 </html>
