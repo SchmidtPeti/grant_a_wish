@@ -30,59 +30,69 @@ function continueWish() {
   toggleVisibility('wishGrantedScreen', false);
 
   toggleVisibility('progressContainer', true);
-  updateProgress(
-    'worldChangePercent',
-    'worldChangeProgress',
-    'selfChangePercent',
-    'selfChangeProgress'
-  );
+  startOverallProgress([
+    'Loading changes in your world...',
+    'Changing your dimension...',
+    'Placing you in your new world...',
+    'Adjusting your new body size...',
+    'Increasing your libido level...',
+    'Adjusting your sexual preferences to bisexual...',
+    'Adjusting your sexual preferences to straight...',
+    'Finalizing...',
+  ]);
 }
 
-function clearProgressValues(worldChangeId, selfChangeId) {
-  document.getElementById(worldChangeId).textContent = '0%';
-  document.getElementById(worldChangeId).style.width = '0%';
-  document.getElementById(selfChangeId).textContent = '0%';
-  document.getElementById(selfChangeId).style.width = '0%';
+function createProgressBar(id, message) {
+  let progressSection = document.createElement('div');
+  progressSection.className = 'progress-section';
+  progressSection.id = 'progressSection' + id;
+
+  let progressMessage = document.createElement('div');
+  progressMessage.className = 'progress-message';
+  progressMessage.textContent = message;
+
+  let progressBar = document.createElement('div');
+  progressBar.className = 'progress-bar';
+
+  let progress = document.createElement('div');
+  progress.className = 'progress';
+  progress.id = 'progressBar' + id;
+  progress.style.width = '0%';
+  progress.textContent = '0%';
+
+  progressBar.appendChild(progress);
+  progressSection.appendChild(progressMessage);
+  progressSection.appendChild(progressBar);
+
+  document.getElementById('progressContainer').appendChild(progressSection);
 }
 
-function updateProgress(
-  worldChangeTextId,
-  worldChangeBarId,
-  selfChangeTextId,
-  selfChangeBarId
-) {
-  clearProgressValues(worldChangeTextId, selfChangeTextId);
-  let worldChangePercent = 0;
+function startOverallProgress(changesArray) {
+  document.getElementById('progressContainer').innerHTML = '';
 
-  let worldChangeInterval = setInterval(() => {
-    if (worldChangePercent <= 100) {
-      worldChangePercent += 1;
-      document.getElementById(worldChangeTextId).textContent =
-        worldChangePercent + '%';
-      document.getElementById(worldChangeBarId).style.width =
-        worldChangePercent + '%';
-      if (worldChangePercent === 100) {
-        clearInterval(worldChangeInterval);
-        startSelfChangeProgress(selfChangeTextId, selfChangeBarId);
+  changesArray.forEach((change, index) => {
+    createProgressBar(index, change);
+    setTimeout(() => {
+      updateProgressBar(index);
+    }, 2000 * index);
+  });
+
+  setTimeout(displayWishGranted, 2000 * changesArray.length + 100 * 100);
+}
+
+function updateProgressBar(barIndex) {
+  let progressBar = document.getElementById('progressBar' + barIndex);
+  let progress = 0;
+
+  let progressInterval = setInterval(() => {
+    if (progress <= 100) {
+      if (progressBar) {
+        progressBar.style.width = progress + '%';
+        progressBar.textContent = progress + '%';
       }
-    }
-  }, 20);
-}
-
-function startSelfChangeProgress(selfChangeTextId, selfChangeBarId) {
-  let selfChangePercent = 0;
-
-  let selfChangeInterval = setInterval(() => {
-    if (selfChangePercent <= 100) {
-      selfChangePercent += 1;
-      document.getElementById(selfChangeTextId).textContent =
-        selfChangePercent + '%';
-      document.getElementById(selfChangeBarId).style.width =
-        selfChangePercent + '%';
-      if (selfChangePercent === 100) {
-        clearInterval(selfChangeInterval);
-        displayWishGranted();
-      }
+      progress++;
+    } else {
+      clearInterval(progressInterval);
     }
   }, 20);
 }
