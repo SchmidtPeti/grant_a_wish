@@ -72,9 +72,9 @@ function startOverallProgress(changesArray) {
 
   changesArray.forEach((change, index) => {
     createProgressBar(index, change);
-    setTimeout(() => {
-      updateProgressBar(index);
-    }, 2000 * index);
+     setTimeout(() => {
+       updateProgressBar(index);
+     }, 2000 * index);
   });
 
   setTimeout(displayWishGranted, 2000 * changesArray.length + 100 * 100);

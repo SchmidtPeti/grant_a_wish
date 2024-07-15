@@ -1,40 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles.css" />
-    <title>Make A Wish</title>
-  </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magical Wish Granter</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+        }
+        h1 {
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: larger;
+            text-align: center;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        input[type="text"]:focus {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+        button {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            border: none;
+            padding: 15px 30px;
+            color: #fff;
+            font-size: 1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        #wishGrantedScreen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .wish-granted-content {
+            background: linear-gradient(135deg, #43cea2, #185a9d);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            animation: pop-in 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        @keyframes pop-in {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        #grantedWish {
+            font-size: 1.2em;
+            margin-top: 20px;
+            font-style: italic;
+        }
+        #wishCount {
+            font-size: 0.9em;
+            margin-top: 10px;
+            color: #feca57;
+        }
+        .steps-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+        .step {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+	    text-align: justify;
+        }
+        .step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        .step h3 {
+            color: #feca57;
+            margin-bottom: 10px;
+        }
 
-  <body>
-    <div id="wishGrantedScreen" style="display: none">
-      <div class="wish-granted-content">
-        <h1>Wish Granted!</h1>
-        <div class="remaining-wishes">
-          Remaining Wishes: <span id="remainingWishes">0</span>
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✨ Magical Wish Granter ✨</h1>
+        <input type="text" id="wishInput" placeholder="Enter your wish here..." required>
+        <button onclick="grantWish()">Grant My Wish</button>
+        <p id="wishCount">Wishes left: 1</p>
+
+        <div class="steps-container">
+            <div class="step">
+                <h3>Step 1: Type Your Wish</h3>
+                <p>Think carefully about what you truly desire and type it into the wish box.</p>
+            </div>
+            <div class="step">
+                <h3>Step 2: Enter the Wish</h3>
+                <p>Click the "Grant My Wish" button to submit your wish to the magical realm.</p>
+            </div>
+            <div class="step">
+                <h3>Step 3: Live New Life</h3>
+                <p>Once your wish is granted, embrace the changes and live your new, magical life!</p>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="modal" id="modalWindow">
-      <div class="modal-content">
-        <h2>Warning</h2>
-        <p>
-          Radical changes are about to happen to your file to grant the wish. Do
-          you still want to continue?
-        </p>
-        <button onclick="continueWish()">Continue</button>
-        <button onclick="closeModal()">Cancel</button>
-      </div>
     </div>
 
-    <div id="progressContainer" style="display: none"></div>
-
-    <div class="container" id="container">
-      <h1>Make A Wish</h1>
-      <input type="text" placeholder="Grant me a wish." id="wishInput" />
-      <button onclick="grantWish()">Grant a wish</button>
+    <div id="wishGrantedScreen">
+        <div class="wish-granted-content">
+            <h2>🎉 Your Wish Has Been Granted! 🎉</h2>
+            <p id="grantedWish"></p>
+            <p id="wishStatus"></p>
+            <button onclick="closeWishGranted()">Close</button>
+        </div>
     </div>
-    <script src="script.js"></script>
-  </body>
+
+    <script>
+        let currentPerson = "Alice";
+        let wishesGranted = 0;
+
+        function grantWish() {
+            const wishInput = document.getElementById('wishInput');
+            const wish = wishInput.value.trim();
+            
+            if (wish) {
+                wishesGranted++;
+                document.getElementById('grantedWish').textContent = `"${wish}"`;
+                
+                if (wishesGranted === 1) {
+                    document.getElementById('wishStatus').textContent = `${currentPerson} has used their only wish and cannot make any more wishes.`;
+                    currentPerson = "Bob";
+                    document.getElementById('wishCount').textContent = `Wishes left: 1`;
+                } else {
+                    document.getElementById('wishStatus').textContent = `${currentPerson} has 1 wish left.`;
+                }
+                
+                document.getElementById('wishGrantedScreen').style.display = 'flex';
+                wishInput.value = '';
+            } else {
+                alert('Please enter a wish!');
+            }
+        }
+
+        function closeWishGranted() {
+            document.getElementById('wishGrantedScreen').style.display = 'none';
+            if (wishesGranted === 1) {
+                document.getElementById('wishInput').placeholder = `${currentPerson}, enter your wish here...`;
+            }
+        }
+    </script>
+</body>
 </html>
