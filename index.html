@@ -157,7 +157,7 @@
     </div>
 
     <script>
-        let currentPerson = "Alice";
+        let currentPerson = "Markus";
         let wishesGranted = 0;
 
         function grantWish() {
@@ -169,7 +169,7 @@
                 document.getElementById('grantedWish').textContent = `"${wish}"`;
                 
                 if (wishesGranted === 1) {
-                    document.getElementById('wishStatus').textContent = `${currentPerson} has used their only wish and cannot make any more wishes.`;
+                    document.getElementById('wishStatus').textContent = `${currentPerson} has used his only wish and cannot make any more wishes.`;
                     currentPerson = "Bob";
                     document.getElementById('wishCount').textContent = `Wishes left: 1`;
                 } else {
