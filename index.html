@@ -1,194 +1,499 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Magical Wish Granter</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
-            color: #fff;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .container {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            text-align: center;
-            max-width: 800px;
-            width: 100%;
-        }
-        h1 {
-            margin-bottom: 30px;
-            font-size: 2.5em;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-        input[type="text"] {
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 20px;
-            border: none;
-            border-radius: 50px;
-            background: rgba(255, 255, 255, 0.2);
-            color: #fff;
-            font-size: larger;
-            text-align: center;
-            outline: none;
-            transition: all 0.3s ease;
-        }
-        input[type="text"]:focus {
-            background: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-        }
-        button {
-            background: linear-gradient(45deg, #ff6b6b, #feca57);
-            border: none;
-            padding: 15px 30px;
-            color: #fff;
-            font-size: 1em;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: bold;
-        }
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-        #wishGrantedScreen {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-        .wish-granted-content {
-            background: linear-gradient(135deg, #43cea2, #185a9d);
-            padding: 40px;
-            border-radius: 20px;
-            text-align: center;
-            animation: pop-in 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
-        @keyframes pop-in {
-            0% { transform: scale(0); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        #grantedWish {
-            font-size: 1.2em;
-            margin-top: 20px;
-            font-style: italic;
-        }
-        #wishCount {
-            font-size: 0.9em;
-            margin-top: 10px;
-            color: #feca57;
-        }
-        .steps-container {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 40px;
-        }
-        .step {
-            flex: 1;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 20px;
-            margin: 0 10px;
-            transition: all 0.3s ease;
-	    text-align: justify;
-        }
-        .step:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        .step h3 {
-            color: #feca57;
-            margin-bottom: 10px;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Magical Wish Granter</title>
+  <style>
+    /* ======== GLOBAL STYLES ======== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-    </style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* ======== MAIN CONTAINER ======== */
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      text-align: center;
+      max-width: 800px;
+      width: 90%;
+      margin: 20px;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+      font-size: 2.5em;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+
+    /* ======== FORM & BUTTONS ======== */
+    input[type="text"] {
+      width: 100%;
+      padding: 15px;
+      margin-bottom: 20px;
+      border: none;
+      border-radius: 50px;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      font-size: larger;
+      text-align: center;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    input[type="text"]:focus {
+      background: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+
+    button {
+      background: linear-gradient(45deg, #ff6b6b, #feca57);
+      border: none;
+      padding: 15px 30px;
+      color: #fff;
+      font-size: 1em;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: bold;
+      margin: 5px;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    #wishCount {
+      font-size: 0.9em;
+      margin-top: 10px;
+      color: #feca57;
+    }
+
+    /* ======== STEP BOXES ======== */
+    .steps-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+
+    .step {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 20px;
+      margin: 10px;
+      transition: all 0.3s ease;
+      text-align: left;
+    }
+
+    .step:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .step h3 {
+      color: #feca57;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    /* ======== MOBILE RESPONSIVE ======== */
+    @media (max-width: 768px) {
+      .steps-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      .step {
+        width: 90%;
+        margin: 10px 0;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+      input[type="text"] {
+        font-size: 1em;
+      }
+    }
+
+    /* ======== MODAL (CONFIRM) ======== */
+    .modal {
+      display: none;
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 10;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: #2f2f2f;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      width: 80%;
+      max-width: 400px;
+      margin: auto;
+    }
+
+    .modal-content h2 {
+      margin-bottom: 20px;
+    }
+
+    /* ======== LOADER ======== */
+    .loader {
+      border: 5px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 5px solid #5555ff;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      display: none;
+      margin: 20px auto;
+    }
+    @keyframes spin {
+      0%   { transform: rotate(0deg);   }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* ======== PROGRESS CONTAINER ======== */
+    #progressContainer {
+      display: none; /* hidden until we continue from the modal */
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
+      max-width: 500px;
+      background: #333;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      z-index: 20;
+    }
+
+    .progress-section {
+      margin-bottom: 30px;
+    }
+
+    .progress-bar {
+      background-color: #444;
+      border-radius: 5px;
+      overflow: hidden;
+      height: 20px;
+      margin-top: 5px;
+    }
+
+    .progress {
+      background-color: hotpink;
+      height: 100%;
+      border-radius: 5px;
+      transition: width 0.5s ease;
+      text-align: center;
+      color: #fff;
+      font-size: 0.8em;
+    }
+
+    /* ======== WISH GRANTED SCREEN ======== */
+    #wishGrantedScreen {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      text-align: center;
+    }
+
+    .wish-granted-content {
+      background: linear-gradient(135deg, #43cea2, #185a9d);
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      animation: pop-in 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      color: #fff;
+      max-width: 400px;
+      width: 80%;
+    }
+
+    @keyframes pop-in {
+      0%   { transform: scale(0);   opacity: 0; }
+      100% { transform: scale(1);   opacity: 1; }
+    }
+
+    #grantedWish {
+      font-size: 1.2em;
+      margin-top: 20px;
+      font-style: italic;
+    }
+    #wishStatus {
+      margin-top: 10px;
+      color: #feca57;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>✨ Magical Wish Granter ✨</h1>
-        <input type="text" id="wishInput" placeholder="Enter your wish here..." required>
-        <button onclick="grantWish()">Grant My Wish</button>
-        <p id="wishCount">Wishes left: 1</p>
 
-        <div class="steps-container">
-            <div class="step">
-                <h3>Step 1: Type Your Wish</h3>
-                <p>Think carefully about what you truly desire and type it into the wish box.</p>
-            </div>
-            <div class="step">
-                <h3>Step 2: Enter the Wish</h3>
-                <p>Click the "Grant My Wish" button to submit your wish to the magical realm.</p>
-            </div>
-            <div class="step">
-                <h3>Step 3: Live New Life</h3>
-                <p>Once your wish is granted, embrace the changes and live your new, magical life!</p>
-            </div>
-        </div>
+  <!-- ========== MAIN CONTAINER ========== -->
+  <div class="container" id="container">
+    <h1>✨ Magical Wish Granter ✨</h1>
+    <input type="text" id="wishInput" placeholder="Enter your wish here..." required>
+    <button onclick="onGrantWishClicked()">Grant My Wish</button>
+    <p id="wishCount">Wishes left: 1</p>
+
+    <div class="steps-container">
+      <div class="step">
+        <h3>Step 1: Type Your Wish</h3>
+        <p>Think carefully about what you truly desire and type it into the wish box.</p>
+      </div>
+      <div class="step">
+        <h3>Step 2: Enter the Wish</h3>
+        <p>Click the "Grant My Wish" button to submit your wish to the magical realm.</p>
+      </div>
+      <div class="step">
+        <h3>Step 3: Live New Life</h3>
+        <p>Once your wish is granted, embrace the changes and live your new, magical life!</p>
+      </div>
     </div>
+  </div>
 
-    <div id="wishGrantedScreen">
-        <div class="wish-granted-content">
-            <h2>🎉 Your Wish Has Been Granted! 🎉</h2>
-            <p id="grantedWish"></p>
-            <p id="wishStatus"></p>
-            <button onclick="closeWishGranted()">Close</button>
-        </div>
+  <!-- ========== MODAL (CONFIRM BEFORE PROGRESS) ========== -->
+  <div class="modal" id="modalWindow">
+    <div class="modal-content">
+      <h2>Are you sure you want to proceed?</h2>
+      <p>Your entire reality is about to change!</p>
+      <button onclick="closeModal()">Cancel</button>
+      <button onclick="continueWish()">Continue</button>
+      <div class="loader" id="loader"></div>
     </div>
+  </div>
 
-    <script>
-        let currentPerson = "Markus";
-        let wishesGranted = 0;
+  <!-- ========== PROGRESS CONTAINER ========== -->
+  <div id="progressContainer"></div>
 
-        function grantWish() {
-            const wishInput = document.getElementById('wishInput');
-            const wish = wishInput.value.trim();
-            
-            if (wish) {
-                wishesGranted++;
-                document.getElementById('grantedWish').textContent = `"${wish}"`;
-                
-                if (wishesGranted === 1) {
-                    document.getElementById('wishStatus').textContent = `${currentPerson} has used his only wish and cannot make any more wishes.`;
-                    currentPerson = "Bob";
-                    document.getElementById('wishCount').textContent = `Wishes left: 1`;
-                } else {
-                    document.getElementById('wishStatus').textContent = `${currentPerson} has 1 wish left.`;
-                }
-                
-                document.getElementById('wishGrantedScreen').style.display = 'flex';
-                wishInput.value = '';
-            } else {
-                alert('Please enter a wish!');
-            }
+  <!-- ========== WISH GRANTED SCREEN ========== -->
+  <div id="wishGrantedScreen">
+    <div class="wish-granted-content">
+      <h2>🎉 Your Wish Has Been Granted! 🎉</h2>
+      <p id="grantedWish"></p>
+      <p id="wishStatus"></p>
+      <button onclick="closeWishGranted()">Close</button>
+    </div>
+  </div>
+
+  <script>
+    // =============================
+    // Global variables
+    // =============================
+    let currentPerson = "Markus";
+    let wishesGranted = 0;
+
+    // =============================
+    // Helper functions
+    // =============================
+    function toggleVisibility(elementId, isVisible) {
+      document.getElementById(elementId).style.display = isVisible
+        ? 'flex'
+        : 'none';
+    }
+
+    function toggleBlockVisibility(elementId, isVisible) {
+      document.getElementById(elementId).style.display = isVisible
+        ? 'block'
+        : 'none';
+    }
+
+    // =============================
+    // Modal controls
+    // =============================
+    function showModal() {
+      toggleVisibility('modalWindow', true);
+    }
+
+    function closeModal() {
+      toggleVisibility('modalWindow', false);
+    }
+
+    function startLoader() {
+      toggleBlockVisibility('loader', true);
+    }
+
+    function stopLoader() {
+      toggleBlockVisibility('loader', false);
+    }
+
+    // =============================
+    // Main Wish Logic
+    // =============================
+    function onGrantWishClicked() {
+      const wishInput = document.getElementById('wishInput');
+      const wish = wishInput.value.trim();
+
+      if (!wish) {
+        alert('Please enter a wish!');
+        return;
+      }
+
+      // If we have a valid wish, set up the text to be shown after progress
+      // We'll store it for final display.
+      document.getElementById('grantedWish').textContent = `"${wish}"`;
+
+      // Increase the wish counter
+      wishesGranted++;
+
+      // Show a confirmation modal (like "Are you sure?")
+      showModal();
+    }
+
+    function continueWish() {
+      closeModal(); // close the confirmation modal
+      document.getElementById('container').style.display = 'none'; // hide main container
+      // Start the progress container
+      toggleBlockVisibility('progressContainer', true);
+
+      // Start the overall progress
+      startOverallProgress([
+        'Loading changes in your world...',
+        'Changing your dimension...',
+        'Placing you in your new world...',
+        'Adjusting your new body size...',
+        'Increasing your libido level...',
+        'Adjusting your sexual preferences to bisexual...',
+        'Adjusting your sexual preferences to straight...',
+        'Finalizing...',
+      ]);
+    }
+
+    // =============================
+    // Progress Bar Logic
+    // =============================
+    function createProgressBar(id, message) {
+      let progressSection = document.createElement('div');
+      progressSection.className = 'progress-section';
+      progressSection.id = 'progressSection' + id;
+
+      let progressMessage = document.createElement('div');
+      progressMessage.className = 'progress-message';
+      progressMessage.style.marginBottom = '5px';
+      progressMessage.textContent = message;
+
+      let progressBar = document.createElement('div');
+      progressBar.className = 'progress-bar';
+
+      let progress = document.createElement('div');
+      progress.className = 'progress';
+      progress.id = 'progressBar' + id;
+      progress.style.width = '0%';
+      progress.textContent = '0%';
+
+      progressBar.appendChild(progress);
+      progressSection.appendChild(progressMessage);
+      progressSection.appendChild(progressBar);
+
+      document.getElementById('progressContainer').appendChild(progressSection);
+    }
+
+    function startOverallProgress(changesArray) {
+      // Clear out any old progress bars
+      document.getElementById('progressContainer').innerHTML = '';
+
+      // For each change step, create a progress bar
+      changesArray.forEach((change, index) => {
+        createProgressBar(index, change);
+        // Delay each bar's start for a bit so they go in sequence
+        setTimeout(() => {
+          updateProgressBar(index);
+        }, 2000 * index);
+      });
+
+      // After all changes plus some buffer, show the final "Wish Granted" screen
+      // The total time: each step starts 2s apart * # of steps,
+      // plus the actual fill time for each step (which is 20*100ms = 2000ms).
+      let totalTime = 2000 * changesArray.length + (100 * 20);
+      setTimeout(displayWishGranted, totalTime);
+    }
+
+    function updateProgressBar(barIndex) {
+      let progressBar = document.getElementById('progressBar' + barIndex);
+      let progress = 0;
+      let progressInterval = setInterval(() => {
+        if (progress <= 100) {
+          if (progressBar) {
+            progressBar.style.width = progress + '%';
+            progressBar.textContent = progress + '%';
+          }
+          progress++;
+        } else {
+          clearInterval(progressInterval);
         }
+      }, 20);
+    }
 
-        function closeWishGranted() {
-            document.getElementById('wishGrantedScreen').style.display = 'none';
-            if (wishesGranted === 1) {
-                document.getElementById('wishInput').placeholder = `${currentPerson}, enter your wish here...`;
-            }
-        }
-    </script>
+    // =============================
+    // Final Wish Granted Screen
+    // =============================
+    function displayWishGranted() {
+      // hide the progress container
+      document.getElementById('progressContainer').style.display = 'none';
+      // show wish granted
+      toggleVisibility('wishGrantedScreen', true);
+
+      // set the "wishStatus" text now that we know how many wishes used
+      if (wishesGranted === 1) {
+        // Markus used his only wish
+        document.getElementById('wishStatus').textContent =
+          `${currentPerson} has used his only wish and cannot make any more wishes.`;
+        // Next person
+        currentPerson = "Bob";
+        document.getElementById('wishCount').textContent = `Wishes left: 1`;
+      } else {
+        document.getElementById('wishStatus').textContent =
+          `${currentPerson} has 1 wish left.`;
+      }
+    }
+
+    function closeWishGranted() {
+      // close the final screen
+      toggleVisibility('wishGrantedScreen', false);
+
+      // if Markus used his 1 wish, we now switch to Bob
+      if (wishesGranted === 1) {
+        document.getElementById('wishInput').placeholder =
+          `${currentPerson}, enter your wish here...`;
+      }
+
+      // reset the main container
+      document.getElementById('container').style.display = 'block';
+      // clear the input field
+      document.getElementById('wishInput').value = '';
+    }
+  </script>
 </body>
 </html>
